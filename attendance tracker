@@ -1,0 +1,78 @@
+
+# Python Attendance Tracker
+
+attendance = {}
+
+def show_menu():
+  print("1 - Add student")
+  print("2 - View attendance")
+  print("3 - Exit")
+
+
+def add_student(name, roll_no, status):
+    if status == "1":
+        status = "Present"
+    else:
+        status = "Absent"
+
+    attendance[name] = {
+        "roll_no": roll_no,
+        "status": status
+    }
+
+    print(f"{name} added successfully!")
+
+
+def attendance_view():
+    if not attendance:
+        print("No student records found.")
+        return
+
+
+    for name, details in attendance.items():
+        print(f"Name: {name}")
+        print(f"Roll No: {details['roll_no']}")
+        print(f"Status: {details['status']}")
+
+
+while True:
+    show_menu()
+
+    try:
+        choice = int(input("Enter your choice: "))
+    except ValueError:
+        print("Please enter a number.")
+        continue
+
+    if choice == 1:
+        name = input("Enter student name: ").strip()
+        if not name:
+            print("Name cannot be empty.")
+            continue
+
+        try:
+            roll_no = int(input("Enter roll number: "))
+        except ValueError:
+            print("Roll number must be a number.")
+            continue
+
+        print("1 - Present")
+        print("2 - Absent")
+        status_choice = input("Enter attendance status: ").strip()
+
+        if status_choice == "1":
+            add_student(name, roll_no, "1")
+        elif status_choice == "2":
+            add_student(name, roll_no, "2")
+        else:
+            print("Invalid status. Please choose 1 or 2.")
+
+    elif choice == 2:
+        attendance_view()
+
+    elif choice == 3:
+        print("Attendance Tracker closed. Goodbye!")
+        break
+
+    else:
+        print("Invalid choice. Please select 1, 2, or 3.")
